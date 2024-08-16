@@ -74,11 +74,41 @@ async delete(req, res) {
 }
 
 
-    async update(req, res){
-        const libro = req.body;
-        const [result] = await pool.query("UPDATE Libros SET nombre=(?), autor=(?), categoria=(?), año_publicacion=(?), ISBN=(?) WHERE id=(?)", [libro.nombre, libro.autor, libro.categoria, libro.año_publicacion, libro.ISBN, libro.id]);
-        res.json({"Registros actualizados": result.changedRows});
+async update(req, res) {
+    const libro = req.body;
+
+    try {
+        // Verificar que todos los campos requeridos estén presentes
+        if (!libro.id || !libro.nombre || !libro.autor || !libro.categoria || !libro.año_publicacion || !libro.ISBN) {
+            return res.status(400).json({ message: "Todos los campos son obligatorios" });
+        }
+
+        // Verificar si el libro existe antes de intentar actualizar
+        const [bookExists] = await pool.query("SELECT * FROM Libros WHERE id = ?", [libro.id]);
+        
+        if (bookExists.length === 0) {
+            return res.status(404).json({ message: "Libro no encontrado" });
+        }
+
+        // Actualizar el libro
+        const [result] = await pool.query(
+            "UPDATE Libros SET nombre = ?, autor = ?, categoria = ?, año_publicacion = ?, ISBN = ? WHERE id = ?",
+            [libro.nombre, libro.autor, libro.categoria, libro.año_publicacion, libro.ISBN, libro.id]
+        );
+
+        // Verificar si se realizaron cambios
+        if (result.changedRows === 0) {
+            return res.status(304).json({ message: "No se realizaron cambios" });
+        }
+
+        res.json({ "Registros actualizados": result.changedRows });
+
+    } catch (error) {
+        // Manejo de errores
+        console.error(error);
+        res.status(500).json({ message: "Error del servidor al intentar actualizar el libro" });
     }
+}
 
 }
 
