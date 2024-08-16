@@ -51,11 +51,28 @@ async add(req, res) {
     }
 }
 
-    async delete(req, res){
-        const libro = req.body;
-        const [result] = await pool.query("DELETE FROM Libros WHERE id=(?)", [libro.id]);
-        res.json({"Registros eliminados": result.affectedRows});    
+async delete(req, res) {
+    const libro = req.body;
+
+    try {
+        // Verificar si el libro existe antes de eliminar
+        const [bookExists] = await pool.query("SELECT * FROM Libros WHERE id = ? AND nombre = ?", [libro.id, libro.nombre]);
+
+        if (bookExists.length === 0) {
+            return res.status(404).json({ message: "Libro inexistente" });
+        }
+
+        // Si el libro existe, proceder a eliminarlo
+        const [result] = await pool.query("DELETE FROM Libros WHERE id = ?", [libro.id]);
+        
+        res.json({ "Registros eliminados": result.affectedRows });
+    } catch (error) {
+        // Manejo de errores
+        console.error(error);
+        res.status(500).json({ message: "Error del servidor al intentar eliminar el libro" });
     }
+}
+
 
     async update(req, res){
         const libro = req.body;
