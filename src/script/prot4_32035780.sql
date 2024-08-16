@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-08-2024 a las 20:44:20
+-- Tiempo de generación: 16-08-2024 a las 20:55:20
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -29,7 +29,7 @@ USE `prot4_32035780`;
 -- Estructura de tabla para la tabla `libros`
 --
 -- Creación: 14-08-2024 a las 18:24:32
--- Última actualización: 14-08-2024 a las 18:35:31
+-- Última actualización: 16-08-2024 a las 18:44:28
 --
 
 CREATE TABLE `libros` (
@@ -48,9 +48,8 @@ CREATE TABLE `libros` (
 INSERT INTO `libros` (`id`, `nombre`, `autor`, `categoria`, `año_publicacion`, `ISBN`) VALUES
 (1, 'manual de relaciones laborales', 'Martha Alles', 'ciencias sociales', '2023-07-20', ' 950641378923'),
 (2, 'harry potter', 'Joana Rolin', 'aventura', '2015-08-20', ' 950641368924'),
-(3, 'el mundo mágico', 'Gabriela Cisneros', 'aventura', '2017-08-03', '1234567891012'),
-(4, 'manual de tu primer trabajo', 'Mariana Castillo', 'ciencias sociales', '2018-08-05', '1234000888321'),
-(5, 'las abichuelas magicas', 'Diego Burman', 'infantil', '0000-00-00', '1234567891012');
+(3, 'el mundo magico', 'Gabriela Cisneros', 'aventura', '2017-08-03', '1234567891012'),
+(4, 'manual de tu primer trabajo', 'Mariana Castillo', 'ciencias sociales', '2018-08-05', '1234000888321');
 
 --
 -- Índices para tablas volcadas
@@ -70,7 +69,7 @@ ALTER TABLE `libros`
 -- AUTO_INCREMENT de la tabla `libros`
 --
 ALTER TABLE `libros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
